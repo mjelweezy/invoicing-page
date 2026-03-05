@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>neno | Invoicing — Create, Send & Track Invoices</title>
+  <meta name="description" content="Create professional invoices, send them in one click, and get paid faster — all from the same platform you bank with.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; font-size: 16px; line-height: 1.6; color: #111826; background: #fff; }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== DESIGN TOKENS (from neno.co) ===== */
+    :root {
+      --white: #ffffff;
+      --off-white: #fcfcfc;
+      --bg-light: #f7f7f7;
+      --bg-card: #f5f5f5;
+      --border-light: #e5e7ea;
+      --text-muted: #6c727e;
+      --text-secondary: #4d5761;
+      --text-primary: #111826;
+      --text-dark: #0a0a0a;
+      --brand-blue: #2e48d8;
+      --brand-blue-hover: #2539b0;
+      --brand-orange: #ed7c35;
+      --brand-purple: #cdb1fa;
+      --black: #0f0f0f;
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 20px;
+      --radius-pill: 100px;
+      --max-width: 1200px;
+      --section-padding: 120px 0;
+      --font-heading: 'Inter', system-ui, sans-serif;
+      --font-body: 'Inter', system-ui, sans-serif;
+    }
+
+    /* ===== UTILITY ===== */
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 40px; }
+    .section { padding: var(--section-padding); }
+    .eyebrow {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .section-heading {
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: 500;
+      border-radius: var(--radius-pill);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-body);
+    }
+    .btn-primary {
+      background: var(--brand-blue);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: var(--brand-blue-hover); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+    }
+    .btn-secondary:hover { background: var(--bg-card); }
+    .btn-white {
+      background: var(--white);
+      color: var(--text-primary);
+    }
+    .btn-white:hover { background: var(--bg-light); }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .nav-logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: -1px;
+    }
+    .nav-logo sup { font-size: 10px; vertical-align: super; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a { font-size: 14px; color: var(--text-secondary); font-weight: 400; }
+    .nav-links a:hover { color: var(--text-primary); }
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-right a { font-size: 14px; color: var(--text-secondary); }
+    .nav-right .btn { padding: 8px 20px; font-size: 14px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: 80px 0 100px;
+      background: var(--white);
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .hero-badge svg { width: 16px; height: 16px; }
+    .hero h1 {
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--text-dark);
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 17px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      max-width: 480px;
+    }
+    .hero-ctas { display: flex; gap: 12px; margin-bottom: 40px; }
+    .hero-checks { display: flex; flex-direction: column; gap: 12px; }
+    .hero-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .hero-check svg { width: 20px; height: 20px; color: var(--brand-blue); flex-shrink: 0; }
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-visual img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    }
+
+    /* ===== THREE-COLUMN BENEFITS ===== */
+    .benefits { padding: 100px 0; background: var(--white); }
+    .benefits .eyebrow { text-align: center; }
+    .benefits .section-heading {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .benefit-card {
+      padding: 40px 32px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      background: var(--white);
+    }
+    .benefit-number {
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--brand-blue);
+      margin-bottom: 60px;
+      display: block;
+    }
+    .benefit-card h3 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+    .benefit-card p {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* ===== HOW IT WORKS (black bg) ===== */
+    .process {
+      padding: 100px 0;
+      background: var(--black);
+      color: var(--white);
+    }
+    .process .section-heading {
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 72px;
+    }
+    .process-steps {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: rgba(255,255,255,0.12);
+    }
+    .process-step {
+      padding-left: 56px;
+      margin-bottom: 56px;
+      position: relative;
+    }
+    .process-step:last-child { margin-bottom: 0; }
+    .step-number {
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--brand-blue);
+      width: 34px;
+      text-align: center;
+    }
+    .process-step h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 8px;
+    }
+    .process-step p {
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.55);
+    }
+
+    /* ===== FEATURE IMAGE SECTION ===== */
+    .feature-showcase {
+      padding: 120px 0;
+      background: var(--white);
+    }
+    .feature-showcase .container {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .feature-showcase-text .eyebrow { color: var(--text-muted); }
+    .feature-showcase-text h2 {
+      font-size: 40px;
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+    .feature-showcase-text p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .feature-showcase-visual img {
+      border-radius: var(--radius-lg);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.06);
+      border: 1px solid var(--border-light);
+    }
+
+    /* ===== 6-GRID FEATURES ===== */
+    .features {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+    .features .eyebrow { text-align: center; }
+    .features .section-heading {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .feature-card {
+      padding: 40px 32px;
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+    }
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 56px;
+      color: var(--brand-blue);
+    }
+    .feature-icon svg { width: 28px; height: 28px; }
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .feature-card p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* ===== TRUST SECTION ===== */
+    .trust { padding: 100px 0; background: var(--white); }
+    .trust .eyebrow { text-align: center; }
+    .trust .section-heading {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+    }
+    .trust-item .trust-icon {
+      width: 40px;
+      height: 40px;
+      color: var(--brand-blue);
+      margin-bottom: 20px;
+    }
+    .trust-item .trust-icon svg { width: 32px; height: 32px; }
+    .trust-item h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .trust-item p {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+
+    /* ===== CROSS-SELL ===== */
+    .cross-sell {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+    .cross-sell .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .cross-sell-text .eyebrow { color: var(--text-muted); }
+    .cross-sell-text h2 {
+      font-size: 36px;
+      font-weight: 600;
+      line-height: 1.15;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+    .cross-sell-text p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+    .cross-sell-checks { margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+    .cross-sell-check {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--text-secondary);
+    }
+    .cross-sell-check svg { width: 18px; height: 18px; color: var(--brand-blue); flex-shrink: 0; }
+    .cross-sell-visual {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      border: 1px solid var(--border-light);
+    }
+    .cross-sell-visual img { width: 100%; }
+
+    /* ===== PRICING ===== */
+    .pricing { padding: 100px 0; background: var(--white); }
+    .pricing .section-heading {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .pricing-card {
+      max-width: 520px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      text-align: center;
+    }
+    .pricing-price {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .pricing-desc {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+    .pricing-features {
+      text-align: left;
+      margin-bottom: 32px;
+    }
+    .pricing-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .pricing-feature:last-child { border-bottom: none; }
+    .pricing-feature svg { width: 18px; height: 18px; color: var(--brand-blue); flex-shrink: 0; }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials { padding: 100px 0; background: var(--bg-light); }
+    .testimonials .eyebrow { margin-bottom: 8px; }
+    .testimonials .section-heading { margin-bottom: 48px; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .testimonial-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+    .testimonial-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      flex: 1;
+    }
+    .testimonial-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .testimonial-author { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+    .stars { color: #f59e0b; font-size: 16px; letter-spacing: 2px; }
+
+    /* ===== FAQ ===== */
+    .faq { padding: 100px 0; background: var(--white); }
+    .faq .section-heading {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+    .faq-list { max-width: 700px; margin: 0 auto; }
+    .faq-item {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-md);
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      background: var(--white);
+      border: none;
+      width: 100%;
+      text-align: left;
+      font-family: var(--font-body);
+    }
+    .faq-question:hover { background: var(--bg-light); }
+    .faq-icon {
+      width: 24px; height: 24px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted);
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+    .faq-answer {
+      display: none;
+      padding: 0 24px 20px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .faq-item.open .faq-answer { display: block; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* ===== FINAL CTA ===== */
+    .final-cta {
+      padding: 100px 0;
+      background: linear-gradient(135deg, rgba(46,72,216,0.12) 0%, rgba(205,177,250,0.2) 50%, rgba(237,124,53,0.15) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 640px;
+    }
+    .final-cta h2 {
+      font-size: 40px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+    .final-cta p {
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      padding: 80px 0 40px;
+      border-top: 1px solid var(--border-light);
+      background: var(--white);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+    .footer-brand .nav-logo { margin-bottom: 12px; }
+    .footer-brand p { font-size: 13px; color: var(--text-muted); }
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      text-transform: capitalize;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .footer-col a:hover { color: var(--text-primary); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-top: 24px;
+      border-top: 1px solid var(--border-light);
+    }
+    .footer-legal { font-size: 12px; color: var(--text-muted); max-width: 700px; line-height: 1.6; }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-size: 12px; color: var(--text-muted); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .hero .container,
+      .feature-showcase .container,
+      .cross-sell .container { grid-template-columns: 1fr; gap: 40px; }
+      .hero h1 { font-size: 40px; }
+      .section-heading { font-size: 32px; }
+      .benefits-grid, .features-grid, .trust-grid, .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .container { padding: 0 20px; }
+      .section { padding: 80px 0; }
+      .hero { padding: 48px 0 64px; }
+      .hero h1 { font-size: 32px; }
+      .hero-sub { font-size: 15px; }
+      .section-heading { font-size: 28px; }
+      .benefits-grid, .features-grid, .trust-grid, .testimonials-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .footer-top { grid-template-columns: 1fr; }
+      .feature-showcase-text h2 { font-size: 30px; }
+      .final-cta h2 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav">
+  <div class="container">
+    <a href="/" class="nav-logo">neno<sup>™</sup></a>
+    <div class="nav-links">
+      <a href="/product">Product</a>
+      <a href="/manifesto">Manifesto</a>
+      <a href="/pricing">Pricing</a>
+      <a href="/resources">Resources</a>
+    </div>
+    <div class="nav-right">
+      <a href="#">English</a>
+      <a href="/login">Log in</a>
+      <a href="/signup" class="btn btn-primary">Get started</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        Invoicing
+      </div>
+      <h1>Create professional invoices and get paid faster</h1>
+      <p class="hero-sub">Build, send, and track invoices from the same platform you bank with. Know the moment you get paid — no refreshing your bank, no reconciling spreadsheets, no chasing.</p>
+      <div class="hero-ctas">
+        <a href="/pricing" class="btn btn-secondary">See pricing</a>
+        <a href="/demo" class="btn btn-primary">Book a demo</a>
+      </div>
+      <div class="hero-checks">
+        <div class="hero-check">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Included with every neno business account
+        </div>
+        <div class="hero-check">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Automatic payment matching and reconciliation
+        </div>
+        <div class="hero-check">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Smart reminders that chase payments for you
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="assets/figma/Invoice builder-2.png" alt="neno invoice builder — split view showing form and live PDF preview">
+    </div>
+  </div>
+</section>
+
+<!-- ===== THREE-COLUMN BENEFITS ===== -->
+<section class="benefits">
+  <div class="container">
+    <p class="eyebrow">ACCELERATE YOUR BUSINESS</p>
+    <h2 class="section-heading">Why entrepreneurs invoice with neno</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-number">1.</span>
+        <h3>Invoicing to payment in one platform</h3>
+        <p>No more switching between your bank and your invoicing tool. Create invoices where your money lives, and watch payments land directly in your account — matched and reconciled automatically.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-number">2.</span>
+        <h3>Professional invoices in minutes</h3>
+        <p>Add your logo, customise your colours, and choose a template that matches your brand. Every invoice looks like it came from a company ten times your size.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-number">3.</span>
+        <h3>Always know where your money is</h3>
+        <p>See what's paid, what's overdue, and what's coming in — all in one dashboard. No spreadsheets, no guesswork, no end-of-month surprises.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HERO IMAGE / LIFESTYLE BREAK ===== -->
+<section style="padding: 0;">
+  <div class="container">
+    <div style="border-radius: var(--radius-xl); overflow: hidden; max-height: 420px;">
+      <img src="https://framerusercontent.com/images/WW7ZZeaRBCyEbBv4Ou51dm85isU.jpg" alt="Entrepreneur working on laptop" style="width: 100%; height: 420px; object-fit: cover;">
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="process">
+  <div class="container">
+    <h2 class="section-heading">Getting paid shouldn't be hard work</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <span class="step-number">1.</span>
+        <h3>Build your invoice</h3>
+        <p>Pick a client from your address book, add line items, select your tax rate, and set payment terms. Add your logo and brand colours, then preview it as a polished PDF before it goes anywhere.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-number">2.</span>
+        <h3>Send it directly</h3>
+        <p>Send from your business email with one click. Your client receives a professional email with a PDF attachment and a secure link to view and pay.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-number">3.</span>
+        <h3>Know when you're paid</h3>
+        <p>When your client pays, neno matches the payment to the right invoice automatically. No checking your bank, no ticking off spreadsheets — you just get a notification that the money has landed.</p>
+      </div>
+      <div class="process-step">
+        <span class="step-number">4.</span>
+        <h3>Let neno chase the rest</h3>
+        <p>For clients who don't pay on time, neno sends smart reminders that match your tone of voice. Set the schedule, and let it handle the follow-ups so you don't have to.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURE SHOWCASE ===== -->
+<section class="feature-showcase">
+  <div class="container">
+    <div class="feature-showcase-text">
+      <p class="eyebrow">INVOICE BUILDER</p>
+      <h2>The fastest way to turn your work into revenue</h2>
+      <p>Build your invoice with a live preview, send it with payment details attached, and let neno handle the rest. Payments match to invoices automatically. Overdue? Smart reminders follow up in your tone of voice — polite, direct, or somewhere in between. You stay focused on your work; neno stays focused on your cash flow.</p>
+      <a href="/signup" class="btn btn-primary">Get started</a>
+    </div>
+    <div class="feature-showcase-visual">
+      <img src="assets/figma/New Invoice.png" alt="Invoice builder with live PDF preview">
+    </div>
+  </div>
+</section>
+
+<!-- ===== 6-GRID FEATURES ===== -->
+<section class="features">
+  <div class="container">
+    <p class="eyebrow">YOUR INVOICING</p>
+    <h2 class="section-heading">Everything you need to get paid</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>Branded, professional PDFs</h3>
+        <p>Every invoice generates a clean PDF with your logo, colours, and company details. Download it, attach it to an email, or let neno send it for you.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3>Shareable payment pages</h3>
+        <p>Each invoice gets a unique payment link your client can open in their browser. They see exactly what they owe, your bank details, and can pay instantly.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <h3>Invoice activity timeline</h3>
+        <p>See exactly what happened and when. Created, sent, viewed, paid — every event is logged so you never have to wonder about the status of an invoice.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+        </div>
+        <h3>Recurring invoices</h3>
+        <p>Set up invoices that repeat on a schedule — weekly, monthly, or custom. Neno generates and sends them automatically, so you get paid on time without remembering to bill.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <h3>Automatic payment matching</h3>
+        <p>When a client pays, neno recognises the transaction and marks the invoice as paid — instantly. No manual reconciliation, no checking your bank. You just get notified that the money has arrived.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Smart payment reminders</h3>
+        <p>Overdue invoices get follow-ups automatically. Set the tone, set the schedule, and let neno handle the uncomfortable conversations so you can focus on your work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 3-COLUMN TRUST ===== -->
+<section class="trust">
+  <div class="container">
+    <p class="eyebrow">THE BENEFITS</p>
+    <h2 class="section-heading">Why it works</h2>
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
+        </div>
+        <h3>Built for Dutch businesses</h3>
+        <p>Standard BTW rates, Dutch-format invoice numbering, and compliant billing defaults. No configuration needed — it just works for your BV from day one.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 10h20"/></svg>
+        </div>
+        <h3>Banking and invoicing, together</h3>
+        <p>When your invoicing and your bank account live in the same platform, reconciliation happens automatically. Payments match to invoices without manual effort.</p>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Send with confidence</h3>
+        <p>Every invoice is reviewed in a live preview before it goes out. Notes, terms and conditions, and payment details are all visible — so there are no surprises for you or your client.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CROSS-SELL ===== -->
+<section class="cross-sell">
+  <div class="container">
+    <div class="cross-sell-text">
+      <div class="hero-badge" style="margin-bottom: 16px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Bookkeeping & Tax
+      </div>
+      <h2>Part of your complete back office</h2>
+      <p>Invoicing is built into your neno business account — so every invoice you send and every payment you receive is already connected to your banking, your bookkeeping, and your tax filings. Your accountant sees every invoice alongside your transactions. When tax season arrives, your VAT filings are already half done because your invoices and books have been in sync all along.</p>
+      <div class="cross-sell-checks">
+        <div class="cross-sell-check">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Real-time insights into your finances
+        </div>
+        <div class="cross-sell-check">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Professional accountants available when you need them
+        </div>
+        <div class="cross-sell-check">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+          Save hundreds of Euros per annum
+        </div>
+      </div>
+      <a href="/product/bookkeeping-tax" style="font-size: 14px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">
+        Explore bookkeeping & tax <span style="font-size: 18px;">→</span>
+      </a>
+    </div>
+    <div class="cross-sell-visual">
+      <img src="assets/figma/Reconciliation.png" alt="Automatic payment reconciliation dashboard">
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING ===== -->
+<section class="pricing">
+  <div class="container">
+    <h2 class="section-heading">Simple pricing</h2>
+    <div class="pricing-card">
+      <p class="pricing-price">Included with your neno account</p>
+      <p class="pricing-desc">Professional invoicing with no per-invoice fees and no hidden costs.</p>
+      <div class="pricing-features">
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Unlimited invoices
+        </div>
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Branded invoice templates with your logo
+        </div>
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Shareable payment pages
+        </div>
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Automatic payment reminders
+        </div>
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Recurring invoice scheduling
+        </div>
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Invoice activity timeline
+        </div>
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          Automatic bank reconciliation
+        </div>
+        <div class="pricing-feature">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          PDF generation and download
+        </div>
+      </div>
+      <a href="/signup" class="btn btn-primary" style="width: 100%;">Get started</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials">
+  <div class="container">
+    <p class="eyebrow">REAL STORIES</p>
+    <h2 class="section-heading">Happy customers are why we're here</h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div>
+          <p class="testimonial-title">Easy Onboarding</p>
+          <p class="testimonial-text">The Neno registration process was surprisingly easy. Everything was digital, the steps were clear, and everything was taken care of in no time. Just what a busy entrepreneur needs.</p>
+        </div>
+        <div class="testimonial-footer">
+          <span class="testimonial-author">Olena K</span>
+          <span class="stars">★★★★★</span>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div>
+          <p class="testimonial-title">Professional Accounting</p>
+          <p class="testimonial-text">Yes! Professional accounting included: transactions are processed automatically. Onboarding is streamlined and fast, and I have a clear overview right away.</p>
+        </div>
+        <div class="testimonial-footer">
+          <span class="testimonial-author">Marije P</span>
+          <span class="stars">★★★★★</span>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div>
+          <p class="testimonial-title">Modern banking</p>
+          <p class="testimonial-text">A convenient and modern business account with everything you need. Virtual cards, instant payments, and excellent overview. And affordable accounting is included.</p>
+        </div>
+        <div class="testimonial-footer">
+          <span class="testimonial-author">Remon M</span>
+          <span class="stars">★★★★★</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="faq">
+  <div class="container">
+    <h2 class="section-heading">FAQ</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Do I need a neno business account to use invoicing?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Yes — invoicing is built into your neno business account. That's what makes automatic payment matching possible: when your client pays, neno sees the transaction and marks the invoice as paid without you lifting a finger.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Can I customise how my invoices look?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Yes. Upload your company logo, choose brand colours, and select from invoice templates. Every invoice generates as a clean, professional PDF that matches your business identity.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          What tax rates are supported?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Neno includes standard Dutch BTW rates (0%, 9%, and 21%) built into the invoice builder. You select the rate per line item, and totals are calculated automatically.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          How do my clients pay?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Each invoice includes your bank details and a shareable payment link. Your client can pay via bank transfer, and the payment is automatically matched to the invoice when it arrives.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          Can I set up recurring invoices?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Yes. Configure invoices to repeat on a weekly, monthly, or custom schedule. Neno generates and sends them automatically on the dates you set, with confirmation before each send.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" onclick="this.parentElement.classList.toggle('open')">
+          What happens if a client doesn't pay on time?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">Neno sends automatic payment reminders on a schedule you control. You can see overdue invoices at a glance on your dashboard and follow up manually if needed.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="final-cta">
+  <div class="container">
+    <h2>Stop chasing payments</h2>
+    <p>Create professional invoices, send them in one click, and get paid faster — all from the same platform you run your business on.</p>
+    <a href="/demo" class="btn btn-primary">Book a demo</a>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo">neno<sup>™</sup></div>
+        <p>Built by a founder who hates admin.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Product</h4>
+        <a href="/product/bv-incorporation">B.V Incorporation</a>
+        <a href="/product/business-accounts-cards">Business Accounts & Cards</a>
+        <a href="/product/bookkeeping-tax">Bookkeeping & Tax</a>
+        <a href="/product/invoicing">Invoicing</a>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <a href="#">Content</a>
+        <a href="#">Partnerships</a>
+        <a href="#">Legal</a>
+        <a href="#">Help Center</a>
+      </div>
+      <div class="footer-col">
+        <h4>Follow us</h4>
+        <a href="#">LinkedIn</a>
+      </div>
+      <div class="footer-col">
+        <p style="font-weight: 500; margin-bottom: 8px;">Reclaim your time.</p>
+        <a href="/demo" style="font-size: 14px; display: inline-flex; align-items: center; gap: 6px;">Book a demo <span>→</span></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-legal">🇪🇺 Proudly European.<br><br>Neno Technology partners with Swan for payment services. Your funds are securely managed by Swan in segregated accounts and safeguarded in accordance with EU regulations.</p>
+      <div class="footer-links">
+        <a href="#">Terms of service</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Cookies settings</a>
+        <a href="#">© 2026 Neno Technologies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
