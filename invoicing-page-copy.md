@@ -24,11 +24,11 @@ Why entrepreneurs invoice with neno
 
 **Benefit 1:**
 *Headline:* Invoicing to payment in one platform
-*Body:* No more switching between your bank and your invoicing tool. Create invoices where your money lives, and watch payments land directly in your account — matched and reconciled automatically.
+*Body:* No more switching between your bank and your invoicing tool. Create invoices where your money lives and watch payments land directly in your account, matched and reconciled automatically.
 
 **Benefit 2:**
 *Headline:* Professional invoices in minutes
-*Body:* Add your logo, customise your colours, and choose a template that matches your brand. Every invoice looks like it came from a company ten times your size.
+*Body:* Add your logo, customise your colours and choose a template that matches your brand. Every invoice looks like it came from a company ten times your size.
 
 **Benefit 3:**
 *Headline:* Always know where your money is
@@ -51,11 +51,11 @@ Getting paid shouldn't be hard work
 
 **Step 3:**
 *Headline:* Know when you're paid
-*Body:* When your client pays, neno matches the payment to the right invoice automatically. No checking your bank, no ticking off spreadsheets — you just get a notification that the money has landed.
+*Body:* When your client pays, neno matches the payment to the right invoice automatically. No checking your bank, no ticking off spreadsheets. You just get a notification that the money has landed.
 
 **Step 4:**
 *Headline:* Let neno chase the rest
-*Body:* For clients who don't pay on time, neno sends smart reminders that match your tone of voice. Set the schedule, and let it handle the follow-ups so you don't have to.
+*Body:* For clients who don't pay on time, neno sends smart reminders that match your tone of voice. Set the schedule and let it handle the follow-ups so you don't have to.
 
 ---
 
@@ -67,7 +67,7 @@ Getting paid shouldn't be hard work
 The fastest way to turn your work into revenue
 
 **Body:**
-Build your invoice with a live preview, send it with payment details attached, and let neno handle the rest. Payments match to invoices automatically. Overdue? Smart reminders follow up in your tone of voice — polite, direct, or somewhere in between. You stay focused on your work; neno stays focused on your cash flow.
+Build your invoice with a live preview, send it with payment details attached and let neno handle the rest. Payments match to invoices automatically. Overdue? Smart reminders follow up in your tone of voice — polite, direct, or somewhere in between. You stay focused on your work; neno stays focused on your cash flow.
 
 **CTA Button:**
 Get started
@@ -87,7 +87,7 @@ Everything you need to get paid
 
 **Feature 3:**
 *Headline:* Shareable payment pages
-*Body:* Each invoice gets a unique payment link your client can open in their browser. They see exactly what they owe, your bank details, and can pay instantly.
+*Body:* Each invoice gets a unique payment link your client can open in their browser. They see exactly what they owe and your bank details, and can pay instantly.
 
 **Feature 4:**
 *Headline:* Invoice activity timeline
@@ -95,7 +95,7 @@ Everything you need to get paid
 
 **Feature 5:**
 *Headline:* Recurring invoices
-*Body:* Set up invoices that repeat on a schedule — weekly, monthly, or custom. Neno generates and sends them automatically, so you get paid on time without remembering to bill.
+*Body:* Set up invoices that repeat on a schedule: weekly, monthly, or custom. Neno generates and sends them automatically, so you get paid on time without remembering to bill.
 
 **Feature 6:**
 *Headline:* Automatic payment matching
@@ -110,7 +110,7 @@ Why it works
 
 **Trust 1:**
 *Headline:* Built for Dutch businesses
-*Body:* Standard BTW rates, Dutch-format invoice numbering, and compliant billing defaults. No configuration needed — it just works for your BV from day one.
+*Body:* Standard BTW rates, Dutch-format invoice numbering, and compliant billing defaults. No configuration needed. It just works for your BV from day one.
 
 **Trust 2:**
 *Headline:* Banking and invoicing, together
@@ -118,7 +118,7 @@ Why it works
 
 **Trust 3:**
 *Headline:* Send with confidence
-*Body:* Every invoice is reviewed in a live preview before it goes out. Notes, terms and conditions, and payment details are all visible — so there are no surprises for you or your client.
+*Body:* Every invoice is reviewed in a live preview before it goes out. Notes, terms and conditions, and payment details are all visible, so there are no surprises for you or your client.
 
 ---
 
@@ -130,7 +130,7 @@ Why it works
 Part of your complete back office
 
 **Body:**
-Invoicing is built into your neno business account — so every invoice you send and every payment you receive is already connected to your banking, your bookkeeping, and your tax filings. Your accountant sees every invoice alongside your transactions. When tax season arrives, your VAT filings are already half done because your invoices and books have been in sync all along.
+Invoicing is built into your neno business account, so every invoice you send and every payment you receive is already connected to your banking, your bookkeeping, and your tax filings. Your accountant sees every invoice alongside your transactions. When tax season arrives, your VAT filings are already half done because your invoices and books have been in sync all along.
 
 **CTA Button:**
 Explore bookkeeping & tax
@@ -168,7 +168,7 @@ Get started
 Questions
 
 **Q: Do I need a neno business account to use invoicing?**
-Yes — invoicing is built into your neno business account. That's what makes automatic payment matching possible: when your client pays, neno sees the transaction and marks the invoice as paid without you lifting a finger.
+Yes. Invoicing is built into your neno business account. That's what makes automatic payment matching possible: when your client pays, neno sees the transaction and marks the invoice as paid without you lifting a finger.
 
 **Q: Can I customise how my invoices look?**
 Yes. Upload your company logo, choose brand colours, and select from invoice templates. Every invoice generates as a clean, professional PDF that matches your business identity.
@@ -177,7 +177,7 @@ Yes. Upload your company logo, choose brand colours, and select from invoice tem
 Neno includes standard Dutch BTW rates (0%, 9%, and 21%) built into the invoice builder. You select the rate per line item, and totals are calculated automatically.
 
 **Q: How do my clients pay?**
-Each invoice includes your bank details and a shareable payment link. Your client can pay via bank transfer, and the payment is automatically matched to the invoice when it arrives.
+Each invoice includes your bank details and a shareable payment link. Your client can pay via bank transfer. The payment is automatically matched to the invoice when it arrives.
 
 **Q: Can I set up recurring invoices?**
 Yes. Configure invoices to repeat on a weekly, monthly, or custom schedule. Neno generates and sends them automatically on the dates you set, with confirmation before each send.
